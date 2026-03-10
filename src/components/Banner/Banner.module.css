@@ -1,0 +1,87 @@
+.banner {
+    position: relative;
+    height: 80vh;
+    background-image: url("/public/livros-de-romance-12-livros-de-romance-que-voce-deve-ler.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    color: white;
+}
+
+/* Gradiente escuro da esquerda */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            90deg,
+            rgba(10, 37, 64, 0.9) 0%,
+            rgba(10, 37, 64, 0.6) 40%,
+            rgba(10, 37, 64, 0.2) 70%,
+            rgba(10, 37, 64, 0) 100%
+    );
+}
+
+.content {
+    position: relative;
+    max-width: 520px;
+    z-index: 1;
+}
+
+/* Tag */
+.tag {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+/* Título */
+.content h1 {
+    font-size: 56px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.content h1 span {
+    color: #cfd8e3;
+}
+
+/* Texto */
+.content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #e0e6ed;
+    margin-bottom: 32px;
+}
+
+/* Botões */
+.actions {
+    display: flex;
+    gap: 16px;
+}
+
+.primary {
+    padding: 14px 26px;
+    border-radius: 30px;
+    border: none;
+    background: white;
+    color: #0a2540;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.secondary {
+    padding: 14px 26px;
+    border-radius: 30px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
