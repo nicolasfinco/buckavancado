@@ -1,78 +1,79 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Catalogo() {
+    const [livros, setLivros] = useState([]);
+    const [titulo, setTitulo] = useState("");
+    const [autor, setAutor] = useState("");
 
-    const livros = [
-        { titulo: "Dom Casmurro", autor: "Machado de Assis", categoria: "Romance" },
-        { titulo: "O Pequeno Príncipe", autor: "Antoine de Saint-Exupéry", categoria: "Infantil" },
-        { titulo: "1984", autor: "George Orwell", categoria: "Ficção" }
-    ];
+    async function buscarLivros() {
+        let url = "https://apps-api-livros.ucxocw.easypanel.host/livro";
 
-    const [busca, setBusca] = useState("");
+        let filtro = "";
 
-    const livrosFiltrados = livros.filter((livro) =>
-        livro.titulo.toLowerCase().includes(busca.toLowerCase())
-    );
+        if (titulo !== "") {
+            filtro += "?titulo=" + titulo;
+        }
+
+        if (autor !== "") {
+            if (filtro === "") {
+                filtro += "?autor=" + autor;
+            } else {
+                filtro += "&autor=" + autor;
+            }
+        }
+
+        url += filtro;
+
+        let retorno = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        retorno = await retorno.json();
+
+        setLivros(retorno.livros);
+    }
+
+    useEffect(() => {
+        buscarLivros();
+    }, [titulo, autor]);
 
     return (
         <div className="container mt-5">
-
             <h2 className="mb-4">Catálogo de Livros</h2>
 
-            {/* CAMPO DE BUSCA */}
-            <input
-                type="text"
-                className="form-control mb-4"
-                placeholder="Buscar livro..."
-                onChange={(e) => setBusca(e.target.value)}
-            />
-
-            {/* FILTROS */}
             <div className="row mb-4">
-
                 <div className="col-md-6">
-                    <select className="form-select">
-                        <option>Filtrar por Autor</option>
-                        <option>Machado de Assis</option>
-                        <option>Antoine de Saint-Exupéry</option>
-                        <option>George Orwell</option>
-                    </select>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Título"
+                        onChange={(e) => setTitulo(e.target.value)}
+                    />
                 </div>
 
                 <div className="col-md-6">
-                    <select className="form-select">
-                        <option>Filtrar por Categoria</option>
-                        <option>Romance</option>
-                        <option>Infantil</option>
-                        <option>Ficção</option>
-                    </select>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Autor"
+                        onChange={(e) => setAutor(e.target.value)}
+                    />
                 </div>
-
             </div>
 
-            {/* LISTA DE LIVROS */}
             <div className="row">
-
-                {livrosFiltrados.map((livro, index) => (
+                {livros.map((livro, index) => (
                     <div className="col-md-4 mb-4" key={index}>
-
-                        <div className="card p-3 shadow-sm">
-
+                        <div className="card p-3 shadow-sm h-100">
                             <h5>{livro.titulo}</h5>
-                            <p className="text-muted mb-1">
-                                Autor: {livro.autor}
-                            </p>
-                            <p className="text-muted">
-                                Categoria: {livro.categoria}
-                            </p>
-
+                            <p className="text-muted mb-0">Autor: {livro.autor}</p>
                         </div>
-
                     </div>
                 ))}
-
             </div>
-
         </div>
     );
 }

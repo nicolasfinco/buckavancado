@@ -1,15 +1,13 @@
 import Banner from "../components/Banner/Banner.jsx";
 import Catalogo from "../components/Catalogo/Catalogo.jsx";
 
-
-function Home() {
+function Home({ pesquisa }) {
     return (
         <div>
             <Banner />
-
-            <Catalogo />
+            <Catalogo pesquisa={pesquisa} />
         </div>
-    )
+    );
 }
 
 export default Home;
